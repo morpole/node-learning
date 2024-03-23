@@ -5,7 +5,8 @@
   "main": "server.js",
   "dependencies": {
     "ejs": "^3.1.9",
-    "express": "^4.19.1"
+    "express": "^4.19.1",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {},
   "scripts": {
