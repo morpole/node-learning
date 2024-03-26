@@ -28,8 +28,8 @@ app.use((req, res, next) => {
 app.get('/add-blog', (req, res) => {
     const blog = new Blog({
       title: 'new blog',
-      snippet: 'about my newest  blog',
-      body: 'more about my newest blog'
+      snippet: 'about my newest blog 4',
+      body: 'more about my newest blog 4'
     })
   
     blog.save()
