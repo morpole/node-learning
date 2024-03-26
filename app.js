@@ -17,8 +17,9 @@ mongoose.connect(dbURI)
 app.set('view engine', 'ejs');
 
 app.use(express.static('public'));
-
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+
 app.use((req, res, next) => {
     res.locals.path = req.path;
     next();
@@ -28,8 +29,8 @@ app.use((req, res, next) => {
 app.get('/add-blog', (req, res) => {
     const blog = new Blog({
       title: 'new blog',
-      snippet: 'about my newest blog 4',
-      body: 'more about my newest blog 4'
+      snippet: 'about my newest blog 5',
+      body: 'more about my newest blog 5'
     })
   
     blog.save()
@@ -70,18 +71,31 @@ app.get('/add-blog', (req, res) => {
   });
   
   // blog routes
-  app.get('/blogs/create', (req, res) => {
-    res.render('create', { title: 'Create a new blog' });
-  });
-  
   app.get('/blogs', (req, res) => {
     Blog.find().sort({ createdAt: -1 })
-      .then(result => {
-        res.render('index', { blogs: result, title: 'All blogs' });
+    .then(result => {
+      res.render('index', { blogs: result, title: 'All blogs' });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  });
+  
+  app.post('/blogs', (req,res) => {
+   const blog = new Blog(req.body);
+
+    blog.save()
+      .then((result) => {
+          res.redirect('/blogs');
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-      });
+      })
+
+  });
+
+  app.get('/blogs/create', (req, res) => {
+    res.render('create', { title: 'Create a new blog' });
   });
   
   // 404 page
